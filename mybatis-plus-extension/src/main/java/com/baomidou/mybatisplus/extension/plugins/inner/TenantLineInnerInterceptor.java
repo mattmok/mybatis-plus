@@ -65,6 +65,9 @@ public class TenantLineInnerInterceptor extends BaseMultiTableInnerInterceptor i
 
     @Override
     public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) throws SQLException {
+        if (tenantLineHandler.getTenantId() == null) {
+            return;
+        }
         if (InterceptorIgnoreHelper.willIgnoreTenantLine(ms.getId())) {
             return;
         }
@@ -74,6 +77,9 @@ public class TenantLineInnerInterceptor extends BaseMultiTableInnerInterceptor i
 
     @Override
     public void beforePrepare(StatementHandler sh, Connection connection, Integer transactionTimeout) {
+        if (tenantLineHandler.getTenantId() == null) {
+            return;
+        }
         PluginUtils.MPStatementHandler mpSh = PluginUtils.mpStatementHandler(sh);
         MappedStatement ms = mpSh.mappedStatement();
         SqlCommandType sct = ms.getSqlCommandType();

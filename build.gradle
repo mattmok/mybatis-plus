@@ -7,7 +7,7 @@ allprojects {
 
 ext {
     configuration = [
-        javaVersion = JavaVersion.VERSION_21
+        javaVersion = JavaVersion.VERSION_17
     ]
 
     libraries = [
@@ -114,8 +114,8 @@ subprojects {
 
     tasks.withType(JavaCompile) {
         options.encoding = 'UTF-8'
-        options.warnings = false
-        options.deprecation = true
+        options.warnings = true
+        options.deprecation = false
         options.compilerArgs += ["-parameters"]
     }
 
@@ -168,6 +168,7 @@ subprojects {
     }
 
     javadoc {
+        enabled false
         afterEvaluate {
             configure(options) {
                 encoding "UTF-8"
